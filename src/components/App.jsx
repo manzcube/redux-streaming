@@ -6,11 +6,12 @@ import StreamShow from './streams/StreamShow';
 import StreamList  from './streams/StreamList';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./Header";
+import createBrowserHistory from '../history'
 
 function App() {
   return (
     <div className="ui container">        
-      <BrowserRouter>
+      <BrowserRouter history={createBrowserHistory}>
           <Header />
         <Routes>
           <Route path='/' element={<StreamList />} />
