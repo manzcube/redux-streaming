@@ -1,9 +1,14 @@
+import axios from "axios";
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchStreams } from '../../actions'
 
+
 class StreamList extends React.Component {
+
+    
+
     componentDidMount() {
         this.props.fetchStreams()
     }
@@ -12,7 +17,7 @@ class StreamList extends React.Component {
         if (stream.userId === this.props.currentUserId) {
             return (
                 <div className="right floated content">
-                    <button className="ui button primary">Edit</button>
+                    <Link to={`streams/edit/${stream.id}`} className="ui button primary">Edit</Link>
                     <button className="ui button negative">Delete</button>
                 </div>
             )
@@ -47,6 +52,7 @@ class StreamList extends React.Component {
     }
 
     render() {
+        
         return (
             <div>
                 <h2>Streams</h2>
@@ -60,6 +66,10 @@ class StreamList extends React.Component {
 }
 
 const mapStateToProps = state => {
+    const response = axios.get('https://randomuser.me/api')
+        .then((response) => {
+            console.log(response.data)
+        })
     return { 
         streams: Object.values(state.streams),
         currentUserId: state.auth.userId,
