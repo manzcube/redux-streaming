@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { fetchStreams } from '../../actions'
 
 class StreamList extends React.Component {
 
-    
 
     componentDidMount() {
         this.props.fetchStreams()
@@ -18,7 +16,7 @@ class StreamList extends React.Component {
             return (
                 <div className="right floated content">
                     <Link to={`streams/edit/${stream.id}`} className="ui button primary">Edit</Link>
-                    <button className="ui button negative">Delete</button>
+                    <Link to={`streams/delete/${stream.id}`} className="ui button negative">Delete</Link>
                 </div>
             )
         }
@@ -28,14 +26,16 @@ class StreamList extends React.Component {
         return this.props.streams.map(stream => {
             return (
                 <div className="item" key={stream.id}>
-                    {this.renderAdmin(stream)}
+                    {this.renderAdmin(stream)}                    
                     <i className="large middle aligned icon camera"></i>
                     <div className="content">
-                        {stream.title}
-                        <div className="description">
-                            {stream.description}
-                        </div>
-                    </div>
+                        <Link to={`streams/${stream.id}`}>
+                            {stream.title}
+                            <div className="description">
+                             {stream.description}
+                            </div>
+                        </Link>
+                    </div>                
                 </div>
             )
         })
@@ -52,7 +52,6 @@ class StreamList extends React.Component {
     }
 
     render() {
-        
         return (
             <div>
                 <h2>Streams</h2>
@@ -66,10 +65,6 @@ class StreamList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const response = axios.get('https://randomuser.me/api')
-        .then((response) => {
-            console.log(response.data)
-        })
     return { 
         streams: Object.values(state.streams),
         currentUserId: state.auth.userId,

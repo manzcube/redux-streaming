@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 class StreamForm extends React.Component {
 
     //Don't know when but this appeared
-    renderError({ error, touched,}) {
+    renderError({ error, touched}) {
         if (touched & error) {
             return (
                 <div className='ui error message'>
